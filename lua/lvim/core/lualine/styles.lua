@@ -2,9 +2,51 @@ local M = {}
 local components = require "lvim.core.lualine.components"
 
 local styles = {
+  walh = nil,
   lvim = nil,
   default = nil,
   none = nil,
+}
+
+local themes = require "lvim.core.lualine.themes"
+
+styles.walh = {
+  options = {
+    theme = themes.walh,
+    icons_enabled = false,
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
+    disabled_filetypes = { "dashboard", "NvimTree", "Outline" },
+  },
+  sections = {
+    lualine_a = {},
+    lualine_b = {
+      components.filename,
+    },
+    lualine_c = {
+      components.diff,
+    },
+    lualine_x = {
+      components.diagnostics,
+      components.location,
+    },
+    lualine_y = {
+      components.treesitter,
+    },
+    lualine_z = {
+
+    },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {
+      components.filename,
+    },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
 }
 
 styles.none = {
@@ -117,9 +159,9 @@ function M.get_style(style)
     local Log = require "lvim.core.log"
     Log:error(
       "Invalid lualine style"
-        .. string.format('"%s"', style)
-        .. "options are: "
-        .. string.format('"%s"', table.concat(style_keys, '", "'))
+      .. string.format('"%s"', style)
+      .. "options are: "
+      .. string.format('"%s"', table.concat(style_keys, '", "'))
     )
     Log:debug '"lvim" style is applied.'
     style = "lvim"

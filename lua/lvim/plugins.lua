@@ -14,27 +14,7 @@ local core_plugins = {
       require("lvim.core.mason").setup()
     end,
   },
-  {
-    "lunarvim/onedarker.nvim",
-    branch = "freeze",
-    config = function()
-      pcall(function()
-        if lvim and lvim.colorscheme == "onedarker" then
-          require("onedarker").setup()
-          lvim.builtin.lualine.options.theme = "onedarker"
-        end
-      end)
-    end,
-    disable = lvim.colorscheme ~= "onedarker",
-  },
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("lvim.core.notify").setup()
-    end,
-    requires = { "nvim-telescope/telescope.nvim" },
-    disable = not lvim.builtin.notify.active or not lvim.builtin.telescope.active,
-  },
+  { "casonadams/walh" },
   { "Tastyep/structlog.nvim" },
 
   { "nvim-lua/popup.nvim" },
@@ -105,17 +85,6 @@ local core_plugins = {
     "folke/lua-dev.nvim",
     module = "lua-dev",
   },
-
-  -- Autopairs
-  {
-    "windwp/nvim-autopairs",
-    -- event = "InsertEnter",
-    config = function()
-      require("lvim.core.autopairs").setup()
-    end,
-    disable = not lvim.builtin.autopairs.active,
-  },
-
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -195,15 +164,44 @@ local core_plugins = {
     end,
     disable = not lvim.builtin.lualine.active,
   },
+  {
+    "romgrk/barbar.nvim",
+    config = function()
+      require("bufferline").setup({
+        icons = false,
+        maximum_padding = 0,
+        insert_at_end = true,
+        animation = false,
+        icon_separator_active = '',
+        icon_separator_inactive = '',
+        icon_close_tab = '',
+        icon_close_tab_modified = '+',
+        icon_pinned = '車',
+        closable = true,
+      })
+    end,
+  },
 
   {
-    "akinsho/bufferline.nvim",
+    "alexghergh/nvim-tmux-navigation",
     config = function()
-      require("lvim.core.bufferline").setup()
+      require("nvim-tmux-navigation").setup({
+        disable_when_zoomed = true,
+        keybindings = {
+          left = "<C-w>h",
+          down = "<C-w>j",
+          up = "<C-w>k",
+          right = "<C-w>l",
+        },
+      })
     end,
-    branch = "main",
-    event = "BufWinEnter",
-    disable = not lvim.builtin.bufferline.active,
+  },
+
+  { 'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      require("lvim.core.fzf").setup()
+    end,
   },
 
   -- Debugging
