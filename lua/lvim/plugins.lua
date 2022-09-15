@@ -14,7 +14,17 @@ local core_plugins = {
       require("lvim.core.mason").setup()
     end,
   },
-  { "casonadams/walh" },
+  -- { "casonadams/walh" },
+  { "~/src/github.com/casonadams/walh" },
+  -- { "~/src/github.com/casonadams/simple-diagnostics.nvim",
+  { "casonadams/simple-diagnostics.nvim",
+    config = function()
+      require("simple-diagnostics").setup({
+        show_virtual_text = true,
+        show_message_area = true,
+      })
+    end,
+  },
   { "Tastyep/structlog.nvim" },
 
   { "nvim-lua/popup.nvim" },
@@ -165,23 +175,11 @@ local core_plugins = {
     disable = not lvim.builtin.lualine.active,
   },
   {
-    "romgrk/barbar.nvim",
+    "akinsho/bufferline.nvim",
     config = function()
-      require("bufferline").setup({
-        icons = false,
-        maximum_padding = 0,
-        insert_at_end = true,
-        animation = false,
-        icon_separator_active = '',
-        icon_separator_inactive = '',
-        icon_close_tab = '',
-        icon_close_tab_modified = '+',
-        icon_pinned = '車',
-        closable = true,
-      })
+      require("lvim.core.bufferline").setup()
     end,
   },
-
   {
     "alexghergh/nvim-tmux-navigation",
     config = function()
